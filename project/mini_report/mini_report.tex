@@ -1,0 +1,42 @@
+\documentclass[12pt]{article}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{Declan Simkins, Rebecca Walton and Jonathan Ismail}
+\rhead{CMPT 355}
+
+\begin{document}
+\section*{Project 1 - AB Puzzle Game}
+
+\subsection*{Minimax Algorithm}
+\quad The minimax algorithm allows the user to determine which move out of their options will deliver the best value, assuming the other player plays optimally.
+This algorithm works well for Konane as it expects two players, with one trying to maximize its score or number of moves left in this case (MAX) and the other trying to minimize the score or minimize the number of moves for the other person (MIN).
+Since we will only have a small amount of time to think of a move with Konane we will not be able to use the traditional minimax algorithm as it would take too much time to come up with a move.
+Instead we are going to use alpha-beta pruning with the minimax algorithm to help improve the speed in which it finds a solution.
+As we run through the minimax algorithm we will keep track of the best value for the both players.
+While searching, if we encounter a value when it's MAX's turn that would be worse for MAX than what we already have we can ignore that branch of the tree because MAX already has a better choice.
+Similarly, if we encounter a value when it's MIN's turn that would be worse for MIN we can also ignore that branch.
+This will speed up the search as we won't spend time searching through things that will definitely not change the solution.
+
+\smallskip The original minimax algorithm also requires that you reach a terminal state and then run a utility function.
+Since the search space for Konane is pretty large and we won't always have a lot of time we cannot count on the algorithm reaching the end of the game.
+Instead we will use iterative deepening alpha-beta minimax and use an evaluation function to evaluate the state at non-terminal nodes.
+This will allow us to cut off the search at a certain depth depending on the time left and to determine which move seems to be the most optimal from the ones we have seen.
+
+\smallskip We are also going to implement a couple of ways to ensure that that we always make a move in the thinking time allowed.
+Initially we are going to have our minimax algorithm poll before it explores any node to see if it does have time to keep on exploring or if it should return the best node it has seen thus far.
+Once that is implemented we would also like to try adding a thread that watches the time and interrupts the minimax algorithm when time is almost up.
+This should improve the speed of the algorithm as it wouldn't be constantly polling while still ensuring that we do not run out of time.
+
+
+\subsection*{Evaluation Function}
+% number of black squares with white square adjacent
+\quad Our evaluation function will be the number of moves available for our colour (eg black) minus the number of moves available for the opponent's colour (eg white).
+
+\subsection*{Representation of the State Space}
+\quad We are going to use array of arrays of characters.
+
+\subsection*{Programming Language}
+\quad The project will be written in C.
+
+\end{document}
